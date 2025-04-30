@@ -1,0 +1,19 @@
+{
+    "endOfLine": "auto",
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120,
+    "tabWidth": 4,
+	"useTabs": false,
+	"prettier/prettier": [
+		"error",
+		{
+			"endOfLine": "auto",
+			"singleQuote": true,
+			"trailingComma": "all",
+			"printWidth": 120,
+			"tabWidth": 4,
+			"useTabs": false
+		}
+	]
+}
