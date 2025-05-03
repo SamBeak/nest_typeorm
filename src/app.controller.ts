@@ -134,6 +134,18 @@ export class AppController {
 		title: ILike('%test%'),
 	});
 	
+	await this.userRepository.findAndCount({
+		where: {
+			id: 1,
+		},
+		order: {
+			id: 'ASC',
+		},
+		skip: 0,
+		take: 10,
+		// 0부터 10개를 가져오고 모든 데이터의 개수를 세어줌
+	})
+	
 	return true; // user1은 저장되지 않음
   }
 }
