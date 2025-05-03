@@ -29,6 +29,19 @@ export class AppController {
 			{
 				id: 2,
 			},
+			// {
+				// id: Not(1), // id가 1이 아닌 것
+				// id: LessThan(10), // id가 10보다 작은 것
+				// id: LessThanOrEqual(10), // id가 10보다 작거나 같은 것
+				// id: MoreThan(10), // id가 10보다 큰 것
+				// id: MoreThanOrEqual(10), // id가 10보다 크거나 같은 것
+				// id: Equal(1), // id가 1인 것
+				// id: Like('%test%'), // id가 test인 것
+				// id: ILike('%test%'), // id가 test인 것 (대소문자 구분 없음)
+				// id: IsNull(), // id가 null인 것
+				// id: Between(1, 10), // id가 1과 10 사이인 것
+				// id: In([1, 2, 3]), // id가 1, 2, 3인 것
+			// },
 		],
 		order: { // 정렬
 			id: 'ASC', // 오름차순
