@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserModel } from './entity/user.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { ProfileModel } from './entity/profile.entity';
 
 @Controller()
@@ -66,5 +66,74 @@ export class AppController {
 	return this.userRepository.save({
 		title: 'test',
 	});
+  }
+  
+  @Post('sample')
+  async postSample() {
+	// 모델에 해당하는 객체 생성 - 저장은 하지 않음
+	const user1 = this.userRepository.create({
+		title: 'sample1',
+		profile: this.profileRepository.create({
+			profileImg: 'sample1.png',
+		}),
+	});
+	
+	console.log(user1);
+	
+	// 실제 저장
+	const user2 = await this.userRepository.save({
+		title: 'sample2',
+		profile: this.profileRepository.create({
+			profileImg: 'sample2.png',
+		}),
+	})
+	
+	console.log(user2);
+	
+	// preload
+	// 입력된 값을 기반으로 DB에 있는 데이터를 불러오고
+	// 추가 입력된 값으로 DB에서 가져온 값들을 대체함
+	// DB에 저장하지는 않음
+	const user3 = await this.userRepository.preload({
+		id: 1,
+		title: 'sample3',
+		profile: this.profileRepository.create({
+			profileImg: 'sample3.png',
+		}),
+	});
+	// user3는 DB에 있는 id가 1인 데이터를 불러오고
+	// title을 sample3으로 변경하고
+	// profileImg를 sample3.png로 변경함
+	console.log(user3);
+	
+	await this.userRepository.increment({id: 1},'count', 1); // id가 1인 데이터의 count를 1 증가시킴
+	
+	await this.userRepository.decrement({id: 1},'count', 1); // id가 1인 데이터의 count를 1 감소시킴
+	
+	await this.userRepository.count(
+		{
+			where: {
+				id: 1, // id가 1인 데이터의 개수를 세어줌
+			}
+		}
+	)
+	
+	await this.userRepository.sum('count', {
+		title: ILike('%test%'),
+	});
+	
+	await this.userRepository.average('count', {
+		title: ILike('%test%'),
+	});
+	
+	await this.userRepository.minimum('count', {
+		title: ILike('%test%'),
+	});
+	
+	await this.userRepository.maximum('count', {
+		title: ILike('%test%'),
+	});
+	
+	return true; // user1은 저장되지 않음
   }
 }
