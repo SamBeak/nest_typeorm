@@ -1,4 +1,4 @@
-import { Column, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserModel } from "./user.entity";
 import { TagModel } from "./tag.entity";
 
@@ -10,7 +10,7 @@ export class PostModel {
 	author : UserModel;
 	
 	@ManyToMany(() => TagModel, (tag) => tag.posts)
-	@JoinColumn()
+	@JoinTable()
 	tags : TagModel[];
 	
 	@Column()

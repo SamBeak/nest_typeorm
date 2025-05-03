@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Generated, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
 import { ProfileModel } from "./profile.entity";
 import { PostModel } from "./post.entity";
 
@@ -39,6 +39,7 @@ export class UserModel {
 	additionalId: string;
 	
 	@OneToOne(() => ProfileModel, (profile) => profile.user)
+	@JoinColumn()
 	profile: ProfileModel;
 	
 	@OneToMany(() => PostModel, (post) => post.author)
