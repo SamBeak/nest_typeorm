@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { ProfileModel } from "./profile.entity";
+import { PostModel } from "./post.entity";
 
 enum Role {
 	USER = "user",
@@ -14,6 +16,15 @@ export class UserModel {
 	@Column()
 	title: string;
 	
+	@Column(
+		{
+			type: "enum",
+			enum: Role,
+			default: Role.USER,
+		}
+	)
+	role: Role;
+	
 	@CreateDateColumn()
 	createdAt: Date;
 	
@@ -26,4 +37,10 @@ export class UserModel {
 	@Column()
 	@Generated("uuid")
 	additionalId: string;
+	
+	@OneToOne(() => ProfileModel, (profile) => profile.user)
+	profile: ProfileModel;
+	
+	@OneToMany(() => PostModel, (post) => post.author)
+	posts: PostModel[];
 }
